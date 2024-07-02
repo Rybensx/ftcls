@@ -24,14 +24,14 @@ pool.connect((err) => {
 app.use(express.json());
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'frontend/build')));
+app.use(express.static(path.join(__dirname, '/opt/render/project/src/frontend/build')));
 
 app.get('/api', (req, res) => {
   res.send('API is running...');
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
+  res.sendFile(path.join('/opt/render/project/src/frontend/build', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
