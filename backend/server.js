@@ -5,11 +5,11 @@ const app = express();
 
 // Configurar la conexión a PostgreSQL
 const pool = new Pool({
-  host: 'dpg-cq1maa3v2p9s73d46bdg-a', // Hostname proporcionado por Render
-  user: 'root', // Username proporcionado por Render
-  password: '6PvIhn6euZQyPTYLdOQnbfUu0MJygEsy', // Password proporcionado por Render
-  database: 'ramos', // Nombre de la base de datos proporcionado por Render
-  port: 5432, // Puerto estándar de PostgreSQL
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT || 5432,
 });
 
 pool.connect((err) => {
@@ -24,14 +24,14 @@ pool.connect((err) => {
 app.use(express.json());
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.use(express.static(path.join(__dirname, 'frontend/build')));
 
 app.get('/api', (req, res) => {
   res.send('API is running...');
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
