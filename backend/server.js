@@ -23,15 +23,12 @@ pool.connect((err) => {
 
 app.use(express.json());
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '/opt/render/project/src/frontend/build')));
+// Middleware para servir archivos estáticos desde el directorio 'ftcls/frontend/build'
+app.use(express.static(path.join(__dirname, 'ftcls/frontend/build')));
 
-app.get('/api', (req, res) => {
-  res.send('API is running...');
-});
-
+// Ruta para servir el archivo 'index.html' en todas las demás rutas
 app.get('*', (req, res) => {
-  res.sendFile(path.join('/opt/render/project/src/frontend/build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'ftcls/frontend/build', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
