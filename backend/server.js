@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Ruta para servir el archivo 'index.html' en todas las demás rutas
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+  res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
