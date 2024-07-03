@@ -24,11 +24,11 @@ pool.connect((err) => {
 app.use(express.json());
 
 // Middleware para servir archivos estáticos desde el directorio 'ftcls/frontend/build'
-app.use(express.static(path.join(__dirname, 'ftcls/frontend/build')));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Ruta para servir el archivo 'index.html' en todas las demás rutas
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'ftcls/frontend/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
