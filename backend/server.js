@@ -1,35 +1,21 @@
 const express = require('express');
 const path = require('path');
-const { Pool } = require('pg'); // Importar el cliente de PostgreSQL
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-// Configurar la conexión a PostgreSQL
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 5432,
-});
+// Configura tu base de datos y otros middlewares aquí
+// ...
 
-pool.connect((err) => {
-  if (err) {
-    console.error('Error connecting to PostgreSQL:', err);
-    process.exit(1); // Salir si no se puede conectar a la base de datos
-  } else {
-    console.log('PostgreSQL connected...');
-  }
-});
+// Define la ruta del frontend
+const frontendPath = path.join(__dirname, '../frontend/build');
+app.use(express.static(frontendPath));
 
-app.use(express.json());
-
-// Middleware para servir archivos estáticos desde el directorio 'ftcls/frontend/build'
-app.use(express.static(path.join(__dirname, '../frontend/build')));
-
-// Ruta para servir el archivo 'index.html' en todas las demás rutas
+// Maneja todas las rutas con el archivo index.html del frontend
 app.get('*', (req, res) => {
   res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+// Inicia el servidor
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
+});
